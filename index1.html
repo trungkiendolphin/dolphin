@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Góc Tư Vấn Cuộc Sống</title>
+<style>
+:root{--bg:#f6f8f7;--card:#fff;--text:#1f2a26;--muted:#64706b;--line:#e1e8e4;--accent:#1f8a70;--soft:#e6f4ef}
+@media (prefers-color-scheme:dark){:root{--bg:#121816;--card:#1b2420;--text:#e6eeea;--muted:#9baba5;--line:#2a3630;--accent:#4cc9a6;--soft:#1f3029}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.65}
+.wrap{max-width:860px;margin:0 auto;padding:0 16px}
+header{padding:48px 0 28px;text-align:center}
+header h1{font-size:30px;margin:0 0 8px}
+header p{color:var(--muted);margin:0 auto;max-width:560px}
+h2{font-size:20px;margin:34px 0 12px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px}
+.topic{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px;text-align:left;cursor:pointer;color:var(--text);font:inherit}
+.topic:hover,.topic.on{border-color:var(--accent);background:var(--soft)}
+.topic b{display:block;font-size:16px}
+.topic span{font-size:13px;color:var(--muted)}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px;margin-top:14px}
+.panel h3{margin:0 0 6px;font-size:18px}
+.panel ul{padding-left:20px;margin:8px 0}
+.panel li{margin:6px 0}
+.q{margin-top:14px;padding:12px;border-radius:10px;background:var(--soft)}
+.q b{color:var(--accent)}
+.check label{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--card);margin-bottom:8px;cursor:pointer}
+.check input{margin-top:5px}
+button.go{background:var(--accent);color:#fff;border:0;border-radius:10px;padding:10px 18px;font:inherit;font-weight:600;cursor:pointer}
+#res{margin-top:12px}
+.note{font-size:14px;color:var(--muted);border-left:3px solid var(--accent);padding:4px 12px;margin:30px 0}
+.faq details{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin-bottom:8px}
+.faq summary{cursor:pointer;font-weight:600}
+footer{text-align:center;color:var(--muted);font-size:14px;padding:30px 0 50px}
+footer a{color:var(--accent)}
+.plans{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin-bottom:14px}
+.plan{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px}
+.plan.pro{border-color:var(--accent)}
+.plan h3{margin:0 0 4px;font-size:17px}
+.plan .tag{font-size:13px;color:var(--accent);font-weight:600}
+.plan ul{padding-left:18px;margin:8px 0 0;color:var(--muted);font-size:14px}
+.form label{display:block;font-weight:600;font-size:14px;margin:12px 0 4px}
+.form input,.form select,.form textarea{width:100%;border:1px solid var(--line);border-radius:8px;padding:10px;background:var(--bg);color:var(--text);font:inherit;font-size:15px}
+.pay{display:flex;gap:16px;flex-wrap:wrap;align-items:center}
+.pay img{width:170px;height:170px;object-fit:contain;border:1px solid var(--line);border-radius:10px;background:#fff}
+.pay .info{flex:1;min-width:200px;font-size:15px}
+.pay code{background:var(--soft);padding:2px 6px;border-radius:5px}
+#fmsg{margin-top:10px;font-size:14px}
+.chk{display:flex;gap:8px;align-items:flex-start;font-size:14px;color:var(--muted);margin-top:12px}
+.chk input{width:auto;margin-top:5px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Góc Tư Vấn Cuộc Sống</h1>
+    <p>Những gợi ý thực tế để bạn bình tĩnh nhìn lại và chọn bước đi tiếp theo cho chuyện tình cảm, gia đình, công việc, tiền bạc và tinh thần.</p>
+  </header>
+
+  <h2>1. Bạn đang gặp vấn đề gì?</h2>
+  <div class="grid" id="topics"></div>
+  <div class="panel" id="panel"></div>
+
+  <h2>2. Tự hỏi nhanh: bạn đang ở trạng thái nào?</h2>
+  <div class="check" id="check"></div>
+  <button class="go" id="btn">Xem gợi ý</button>
+  <div class="panel" id="res" hidden></div>
+
+  <h2>3. Câu hỏi thường gặp</h2>
+  <div class="faq">
+    <details><summary>Khi quá rối, nên bắt đầu từ đâu?</summary><p>Viết ra giấy: chuyện gì đã xảy ra, bạn cảm thấy thế nào, bạn muốn kết quả ra sao. Tách sự việc khỏi cảm xúc giúp đầu óc rõ hơn rất nhiều.</p></details>
+    <details><summary>Có nên quyết định lúc đang giận hay quá buồn?</summary><p>Với việc quan trọng thì không nên. Hãy chờ ít nhất 24 giờ, ngủ một giấc rồi nhìn lại. Quyết định lúc cảm xúc quá mạnh thường dễ hối hận.</p></details>
+    <details><summary>Làm sao biết nên tin lời khuyên của ai?</summary><p>Ưu tiên người hiểu rõ hoàn cảnh bạn, không có lợi ích riêng trong quyết định của bạn, và dám nói điều bạn chưa muốn nghe. Lời khuyên nào cũng chỉ để tham khảo, quyết định cuối cùng vẫn là của bạn.</p></details>
+    <details><summary>Khi nào cần gặp chuyên gia?</summary><p>Khi tình trạng kéo dài hơn vài tuần, ảnh hưởng đến ăn ngủ, công việc, các mối quan hệ, hoặc bạn có ý nghĩ làm hại bản thân. Lúc này hãy tìm bác sĩ, chuyên gia tâm lý, hoặc luật sư (với vấn đề pháp lý) thay vì tự chịu một mình.</p></details>
+  </div>
+
+  <h2>4. Gửi câu hỏi riêng, được trả lời trực tiếp</h2>
+  <div class="plans">
+    <div class="plan">
+      <h3>Đọc gợi ý miễn phí</h3>
+      <span class="tag">Miễn phí</span>
+      <ul><li>Xem gợi ý theo chủ đề ở trên</li><li>Tự hỏi nhanh để nhìn lại bản thân</li></ul>
+    </div>
+    <div class="plan pro">
+      <h3>Được trả lời trực tiếp</h3>
+      <span class="tag">Trả phí hoặc ủng hộ tự nguyện</span>
+      <ul><li>Bạn gửi câu hỏi riêng, mình đọc và trả lời</li><li>Phản hồi qua email hoặc Zalo trong <span data-reply></span></li><li>Câu hỏi được giữ kín, chỉ dùng để trả lời bạn</li></ul>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h3>Bước 1: Ủng hộ / thanh toán</h3>
+    <div class="pay">
+      <img id="qr" alt="Mã QR chuyển khoản" hidden>
+      <div class="info" id="payinfo"></div>
+    </div>
+  </div>
+
+  <div class="panel form">
+    <h3>Bước 2: Gửi câu hỏi của bạn</h3>
+    <form id="qform" novalidate>
+      <label for="f-name">Tên (hoặc biệt danh)</label>
+      <input id="f-name" required maxlength="60">
+      <label for="f-contact">Email hoặc số Zalo để nhận trả lời</label>
+      <input id="f-contact" required maxlength="80">
+      <label for="f-topic">Chủ đề</label>
+      <select id="f-topic"></select>
+      <label for="f-q">Câu hỏi / hoàn cảnh của bạn</label>
+      <textarea id="f-q" rows="6" required maxlength="2000" placeholder="Hãy kể ngắn gọn chuyện gì đang xảy ra và bạn mong muốn điều gì..."></textarea>
+      <label for="f-ref">Mã giao dịch hoặc nội dung chuyển khoản (nếu đã ủng hộ)</label>
+      <input id="f-ref" maxlength="80">
+      <label class="chk"><input type="checkbox" id="f-ok"> <span>Mình hiểu đây là chia sẻ và tham khảo, không thay thế bác sĩ, chuyên gia tâm lý, luật sư hay chuyên gia tài chính.</span></label>
+      <div class="row" style="margin-top:14px"><button class="go" type="submit">Gửi câu hỏi</button></div>
+      <div id="fmsg" role="status"></div>
+    </form>
+  </div>
+
+  <p class="note">Nội dung trên trang chỉ mang tính tham khảo chung, không thay thế tư vấn của bác sĩ, chuyên gia tâm lý, luật sư hay chuyên gia tài chính. Nếu bạn hoặc người thân đang có nguy cơ nguy hiểm đến tính mạng, hãy gọi cấp cứu hoặc nhờ người xung quanh giúp ngay.</p>
+
+  <footer>
+    Cần trao đổi thêm? Liên hệ: <a href="mailto:email@cuaban.com">email@cuaban.com</a> · Zalo: 09xx xxx xxx<br>
+    © Góc Tư Vấn Cuộc Sống
+  </footer>
+</div>
+
+<script>
+var DATA = [
+  {k:"Tình cảm",d:"Yêu đương, chia tay, hiểu lầm",
+   t:"Chuyện tình cảm",
+   tips:["Nói rõ điều bạn cảm thấy và cần, thay vì chờ đối phương tự đoán.","Dùng câu bắt đầu bằng \"mình cảm thấy...\" thay vì \"bạn luôn...\", để tránh biến cuộc nói chuyện thành cãi nhau.","Sau chia tay, cho bản thân thời gian, hạn chế nhắn lại lúc đang quá cảm xúc.","Phân biệt khác biệt có thể thương lượng và điều bạn không thể chấp nhận (tôn trọng, trung thực, an toàn)."],
+   q:"Nếu mối quan hệ này tiếp tục như hiện tại thêm một năm nữa, bạn có thấy ổn không?"},
+  {k:"Gia đình",d:"Cha mẹ, con cái, anh chị em",
+   t:"Chuyện gia đình",
+   tips:["Chọn lúc cả hai bình tĩnh để nói chuyện, tránh lúc đang cãi vã hay mệt.","Lắng nghe hết ý đối phương trước khi giải thích. Nhiều xung đột đến từ chỗ không ai thấy mình được hiểu.","Với cha mẹ khác thế hệ, hãy bắt đầu bằng sự ghi nhận ý tốt của họ rồi mới trình bày quan điểm.","Đặt ranh giới rõ ràng nhưng nhẹ nhàng, ví dụ về thời gian, tiền bạc, chuyện riêng tư."],
+   q:"Điều mà người thân thực sự mong muốn đằng sau lời nói khó nghe của họ là gì?"},
+  {k:"Công việc",d:"Nghề nghiệp, sếp, đồng nghiệp",
+   t:"Công việc và sự nghiệp",
+   tips:["Liệt kê rõ điều làm bạn mệt: công việc, môi trường, thu nhập hay định hướng. Mỗi thứ có cách giải quyết khác nhau.","Trước khi nghỉ việc, thử trao đổi thẳng với quản lý và chuẩn bị sẵn phương án tài chính cho vài tháng.","Mỗi tháng học thêm một kỹ năng nhỏ, để khi cần đổi hướng bạn có thêm lựa chọn.","Với xung đột đồng nghiệp, giữ ghi chép sự việc cụ thể thay vì cảm nhận chung chung."],
+   q:"Trong 3 năm nữa, bạn muốn công việc của mình mang lại điều gì cho cuộc sống?"},
+  {k:"Tiền bạc",d:"Chi tiêu, tiết kiệm, nợ",
+   t:"Tiền bạc",
+   tips:["Ghi lại chi tiêu trong 1 tháng để biết tiền đi đâu, đây là bước đầu tiên và hiệu quả nhất.","Chia thu nhập theo mục: chi thiết yếu, tiết kiệm, hưởng thụ. Tỷ lệ tùy hoàn cảnh nhưng nên có khoản tiết kiệm đều đặn.","Cố gắng có quỹ dự phòng bằng vài tháng chi tiêu trước khi nghĩ đến đầu tư.","Cẩn thận lời hứa lãi cao bất thường. Với khoản vay hay đầu tư lớn, nên hỏi chuyên gia tài chính độc lập."],
+   q:"Nếu mất thu nhập 3 tháng, bạn có đủ tiền sinh hoạt không?"},
+  {k:"Học tập",d:"Chọn ngành, áp lực, định hướng",
+   t:"Học tập và định hướng",
+   tips:["Chọn ngành dựa trên cả 3 điều: bạn giỏi gì, bạn thích gì, thị trường cần gì.","Nói chuyện với người đang làm nghề bạn quan tâm để biết công việc thực tế hằng ngày.","Chia mục tiêu lớn thành việc nhỏ theo tuần, tránh bị ngợp.","Điểm số không định nghĩa giá trị của bạn. Sai hướng ban đầu vẫn có thể đổi hướng."],
+   q:"Nếu không ai so sánh hay đánh giá, bạn sẽ chọn học điều gì?"},
+  {k:"Tinh thần",d:"Căng thẳng, mệt mỏi, cô đơn",
+   t:"Sức khỏe tinh thần",
+   tips:["Giữ nền tảng cơ bản: ngủ đủ, ăn uống đều, vận động nhẹ mỗi ngày.","Nói chuyện với một người bạn tin tưởng. Chia sẻ thường làm gánh nặng nhẹ đi.","Giảm lướt mạng xã hội khi đang buồn, vì dễ so sánh và nghĩ tiêu cực hơn.","Nếu cảm giác nặng nề kéo dài, mất hứng thú với mọi thứ, hoặc có ý nghĩ làm hại bản thân, hãy gặp bác sĩ hoặc chuyên gia tâm lý sớm và nói với người thân ngay."],
+   q:"Hôm nay có điều nhỏ nào, dù rất nhỏ, khiến bạn thấy dễ chịu hơn một chút không?"}
+];
+var CHK = [
+  {t:"Tôi đang rất giận hoặc rất buồn, khó suy nghĩ rõ ràng",r:"Hãy tạm dừng: hít thở sâu, đi bộ ra ngoài, hoặc ngủ một giấc. Hoãn mọi quyết định quan trọng ít nhất 24 giờ."},
+  {t:"Tôi có quá nhiều việc và không biết làm gì trước",r:"Viết hết ra giấy, chọn 1 đến 3 việc quan trọng nhất cho hôm nay. Những việc còn lại để sau."},
+  {t:"Tôi cần nói chuyện với ai đó nhưng ngại mở lời",r:"Bắt đầu bằng một câu ngắn như \"Mình đang có chuyện muốn kể, bạn nghe mình chút được không?\". Người thân thường sẵn lòng hơn bạn nghĩ."},
+  {t:"Tình trạng này đã kéo dài nhiều tuần và ảnh hưởng ăn ngủ, công việc",r:"Đây là dấu hiệu nên gặp chuyên gia (bác sĩ, nhà tâm lý). Tìm giúp đỡ sớm không phải là yếu đuối."}
+];
+var tp = document.getElementById("topics"), pn = document.getElementById("panel");
+function show(i){
+  var d = DATA[i];
+  Array.prototype.forEach.call(tp.children, function(b,j){ b.classList.toggle("on", i===j); });
+  pn.innerHTML = "<h3>" + d.t + "</h3><ul>" + d.tips.map(function(x){return "<li>"+x+"</li>";}).join("") + "</ul><div class=\"q\"><b>Câu hỏi để tự nhìn lại:</b> " + d.q + "</div>";
+}
+DATA.forEach(function(d,i){
+  var b = document.createElement("button"); b.className = "topic";
+  b.innerHTML = "<b>" + d.k + "</b><span>" + d.d + "</span>";
+  b.onclick = function(){ show(i); };
+  tp.appendChild(b);
+});
+show(0);
+var ck = document.getElementById("check");
+CHK.forEach(function(c,i){
+  var l = document.createElement("label");
+  l.innerHTML = "<input type=\"checkbox\" value=\"" + i + "\"><span>" + c.t + "</span>";
+  ck.appendChild(l);
+});
+document.getElementById("btn").onclick = function(){
+  var r = document.getElementById("res"), out = [];
+  Array.prototype.forEach.call(ck.querySelectorAll("input:checked"), function(x){ out.push("<li>" + CHK[x.value].r + "</li>"); });
+  r.hidden = false;
+  r.innerHTML = out.length ? "<ul>" + out.join("") + "</ul>" : "Hãy tick vào những câu đúng với bạn để xem gợi ý.";
+};
+
+/* ===== CẤU HÌNH GÓI 2: SỬA CÁC DÒNG DƯỚI ĐÂY ===== */
+var CONFIG = {
+  email: "email@cuaban.com",          // email nhận câu hỏi
+  zalo: "09xx xxx xxx",               // số Zalo hiển thị
+  replyTime: "24 đến 48 giờ",         // thời gian phản hồi dự kiến
+  qrImage: "",                         // đường dẫn ảnh QR, ví dụ "qr.png" (để ảnh cùng thư mục index.html)
+  bank: "Tên ngân hàng - Số tài khoản - Tên chủ tài khoản",
+  suggest: "Ủng hộ tự nguyện hoặc mức phí bạn đặt ra, ví dụ 50.000đ / câu hỏi",
+  transferNote: "TUVAN + tên của bạn",
+  formUrl: ""                          // (tùy chọn) link Formspree dạng https://formspree.io/f/xxxx để nhận câu hỏi tự động về email
+};
+/* ================================================= */
+
+(function(){
+  var rt = document.querySelector("[data-reply]"); if (rt) rt.textContent = CONFIG.replyTime;
+  var qr = document.getElementById("qr");
+  if (CONFIG.qrImage){ qr.src = CONFIG.qrImage; qr.hidden = false; }
+  document.getElementById("payinfo").innerHTML =
+    "<p>" + CONFIG.suggest + "</p>" +
+    "<p>Tài khoản: <b>" + CONFIG.bank + "</b></p>" +
+    "<p>Nội dung chuyển khoản: <code>" + CONFIG.transferNote + "</code></p>";
+  var sel = document.getElementById("f-topic");
+  DATA.forEach(function(d){ var o = document.createElement("option"); o.textContent = d.k; sel.appendChild(o); });
+  var other = document.createElement("option"); other.textContent = "Khác"; sel.appendChild(other);
+
+  var msg = document.getElementById("fmsg");
+  function say(t, bad){ msg.textContent = t; msg.style.color = bad ? "#d64545" : "var(--accent)"; }
+
+  document.getElementById("qform").addEventListener("submit", function(ev){
+    ev.preventDefault();
+    var v = function(id){ return document.getElementById(id).value.trim(); };
+    if (!v("f-name") || !v("f-contact") || !v("f-q")) return say("Bạn vui lòng điền tên, cách liên hệ và câu hỏi.", true);
+    if (!document.getElementById("f-ok").checked) return say("Bạn vui lòng tick xác nhận phía trên.", true);
+    var body = "Tên: " + v("f-name") + "\nLiên hệ: " + v("f-contact") + "\nChủ đề: " + v("f-topic") +
+               "\nMã giao dịch: " + (v("f-ref") || "(chưa có)") + "\n\nCâu hỏi:\n" + v("f-q");
+    if (CONFIG.formUrl){
+      fetch(CONFIG.formUrl, {method:"POST", headers:{"Content-Type":"application/json","Accept":"application/json"},
+        body: JSON.stringify({name:v("f-name"), contact:v("f-contact"), topic:v("f-topic"), ref:v("f-ref"), message:v("f-q")})})
+      .then(function(r){ if (r.ok){ say("Đã gửi! Mình sẽ phản hồi trong " + CONFIG.replyTime + "."); document.getElementById("qform").reset(); } else { say("Gửi chưa được, bạn thử lại hoặc gửi trực tiếp qua email " + CONFIG.email, true); } })
+      .catch(function(){ say("Gửi chưa được, bạn thử lại hoặc gửi trực tiếp qua email " + CONFIG.email, true); });
+    } else {
+      window.location.href = "mailto:" + CONFIG.email + "?subject=" + encodeURIComponent("Câu hỏi tư vấn: " + v("f-topic")) + "&body=" + encodeURIComponent(body);
+      say("Ứng dụng email của bạn sẽ mở ra, bạn bấm Gửi để hoàn tất. Nếu không mở được, hãy gửi nội dung tới " + CONFIG.email + ".");
+    }
+  });
+})();
+</script>
+</body>
+</html>
