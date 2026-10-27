@@ -34,6 +34,21 @@ button.go{background:var(--accent);color:#fff;border:0;border-radius:10px;paddin
 .faq summary{cursor:pointer;font-weight:600}
 footer{text-align:center;color:var(--muted);font-size:14px;padding:30px 0 50px}
 footer a{color:var(--accent)}
+.plans{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin-bottom:14px}
+.plan{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px}
+.plan.pro{border-color:var(--accent)}
+.plan h3{margin:0 0 4px;font-size:17px}
+.plan .tag{font-size:13px;color:var(--accent);font-weight:600}
+.plan ul{padding-left:18px;margin:8px 0 0;color:var(--muted);font-size:14px}
+.form label{display:block;font-weight:600;font-size:14px;margin:12px 0 4px}
+.form input,.form select,.form textarea{width:100%;border:1px solid var(--line);border-radius:8px;padding:10px;background:var(--bg);color:var(--text);font:inherit;font-size:15px}
+.pay{display:flex;gap:16px;flex-wrap:wrap;align-items:center}
+.pay img{width:170px;height:170px;object-fit:contain;border:1px solid var(--line);border-radius:10px;background:#fff}
+.pay .info{flex:1;min-width:200px;font-size:15px}
+.pay code{background:var(--soft);padding:2px 6px;border-radius:5px}
+#fmsg{margin-top:10px;font-size:14px}
+.chk{display:flex;gap:8px;align-items:flex-start;font-size:14px;color:var(--muted);margin-top:12px}
+.chk input{width:auto;margin-top:5px}
 </style>
 </head>
 <body>
@@ -58,6 +73,47 @@ footer a{color:var(--accent)}
     <details><summary>Có nên quyết định lúc đang giận hay quá buồn?</summary><p>Với việc quan trọng thì không nên. Hãy chờ ít nhất 24 giờ, ngủ một giấc rồi nhìn lại. Quyết định lúc cảm xúc quá mạnh thường dễ hối hận.</p></details>
     <details><summary>Làm sao biết nên tin lời khuyên của ai?</summary><p>Ưu tiên người hiểu rõ hoàn cảnh bạn, không có lợi ích riêng trong quyết định của bạn, và dám nói điều bạn chưa muốn nghe. Lời khuyên nào cũng chỉ để tham khảo, quyết định cuối cùng vẫn là của bạn.</p></details>
     <details><summary>Khi nào cần gặp chuyên gia?</summary><p>Khi tình trạng kéo dài hơn vài tuần, ảnh hưởng đến ăn ngủ, công việc, các mối quan hệ, hoặc bạn có ý nghĩ làm hại bản thân. Lúc này hãy tìm bác sĩ, chuyên gia tâm lý, hoặc luật sư (với vấn đề pháp lý) thay vì tự chịu một mình.</p></details>
+  </div>
+
+  <h2>4. Gửi câu hỏi riêng, được trả lời trực tiếp</h2>
+  <div class="plans">
+    <div class="plan">
+      <h3>Đọc gợi ý miễn phí</h3>
+      <span class="tag">Miễn phí</span>
+      <ul><li>Xem gợi ý theo chủ đề ở trên</li><li>Tự hỏi nhanh để nhìn lại bản thân</li></ul>
+    </div>
+    <div class="plan pro">
+      <h3>Được trả lời trực tiếp</h3>
+      <span class="tag">Trả phí hoặc ủng hộ tự nguyện</span>
+      <ul><li>Bạn gửi câu hỏi riêng, mình đọc và trả lời</li><li>Phản hồi qua email hoặc Zalo trong <span data-reply></span></li><li>Câu hỏi được giữ kín, chỉ dùng để trả lời bạn</li></ul>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h3>Bước 1: Ủng hộ / thanh toán</h3>
+    <div class="pay">
+      <img id="qr" alt="Mã QR chuyển khoản" hidden>
+      <div class="info" id="payinfo"></div>
+    </div>
+  </div>
+
+  <div class="panel form">
+    <h3>Bước 2: Gửi câu hỏi của bạn</h3>
+    <form id="qform" novalidate>
+      <label for="f-name">Tên (hoặc biệt danh)</label>
+      <input id="f-name" required maxlength="60">
+      <label for="f-contact">Email hoặc số Zalo để nhận trả lời</label>
+      <input id="f-contact" required maxlength="80">
+      <label for="f-topic">Chủ đề</label>
+      <select id="f-topic"></select>
+      <label for="f-q">Câu hỏi / hoàn cảnh của bạn</label>
+      <textarea id="f-q" rows="6" required maxlength="2000" placeholder="Hãy kể ngắn gọn chuyện gì đang xảy ra và bạn mong muốn điều gì..."></textarea>
+      <label for="f-ref">Mã giao dịch hoặc nội dung chuyển khoản (nếu đã ủng hộ)</label>
+      <input id="f-ref" maxlength="80">
+      <label class="chk"><input type="checkbox" id="f-ok"> <span>Mình hiểu đây là chia sẻ và tham khảo, không thay thế bác sĩ, chuyên gia tâm lý, luật sư hay chuyên gia tài chính.</span></label>
+      <div class="row" style="margin-top:14px"><button class="go" type="submit">Gửi câu hỏi</button></div>
+      <div id="fmsg" role="status"></div>
+    </form>
   </div>
 
   <p class="note">Nội dung trên trang chỉ mang tính tham khảo chung, không thay thế tư vấn của bác sĩ, chuyên gia tâm lý, luật sư hay chuyên gia tài chính. Nếu bạn hoặc người thân đang có nguy cơ nguy hiểm đến tính mạng, hãy gọi cấp cứu hoặc nhờ người xung quanh giúp ngay.</p>
@@ -126,6 +182,53 @@ document.getElementById("btn").onclick = function(){
   r.hidden = false;
   r.innerHTML = out.length ? "<ul>" + out.join("") + "</ul>" : "Hãy tick vào những câu đúng với bạn để xem gợi ý.";
 };
+
+/* ===== CẤU HÌNH GÓI 2: SỬA CÁC DÒNG DƯỚI ĐÂY ===== */
+var CONFIG = {
+  email: "email@cuaban.com",          // email nhận câu hỏi
+  zalo: "09xx xxx xxx",               // số Zalo hiển thị
+  replyTime: "24 đến 48 giờ",         // thời gian phản hồi dự kiến
+  qrImage: "",                         // đường dẫn ảnh QR, ví dụ "qr.png" (để ảnh cùng thư mục index.html)
+  bank: "Tên ngân hàng - Số tài khoản - Tên chủ tài khoản",
+  suggest: "Ủng hộ tự nguyện hoặc mức phí bạn đặt ra, ví dụ 50.000đ / câu hỏi",
+  transferNote: "TUVAN + tên của bạn",
+  formUrl: ""                          // (tùy chọn) link Formspree dạng https://formspree.io/f/xxxx để nhận câu hỏi tự động về email
+};
+/* ================================================= */
+
+(function(){
+  var rt = document.querySelector("[data-reply]"); if (rt) rt.textContent = CONFIG.replyTime;
+  var qr = document.getElementById("qr");
+  if (CONFIG.qrImage){ qr.src = CONFIG.qrImage; qr.hidden = false; }
+  document.getElementById("payinfo").innerHTML =
+    "<p>" + CONFIG.suggest + "</p>" +
+    "<p>Tài khoản: <b>" + CONFIG.bank + "</b></p>" +
+    "<p>Nội dung chuyển khoản: <code>" + CONFIG.transferNote + "</code></p>";
+  var sel = document.getElementById("f-topic");
+  DATA.forEach(function(d){ var o = document.createElement("option"); o.textContent = d.k; sel.appendChild(o); });
+  var other = document.createElement("option"); other.textContent = "Khác"; sel.appendChild(other);
+
+  var msg = document.getElementById("fmsg");
+  function say(t, bad){ msg.textContent = t; msg.style.color = bad ? "#d64545" : "var(--accent)"; }
+
+  document.getElementById("qform").addEventListener("submit", function(ev){
+    ev.preventDefault();
+    var v = function(id){ return document.getElementById(id).value.trim(); };
+    if (!v("f-name") || !v("f-contact") || !v("f-q")) return say("Bạn vui lòng điền tên, cách liên hệ và câu hỏi.", true);
+    if (!document.getElementById("f-ok").checked) return say("Bạn vui lòng tick xác nhận phía trên.", true);
+    var body = "Tên: " + v("f-name") + "\nLiên hệ: " + v("f-contact") + "\nChủ đề: " + v("f-topic") +
+               "\nMã giao dịch: " + (v("f-ref") || "(chưa có)") + "\n\nCâu hỏi:\n" + v("f-q");
+    if (CONFIG.formUrl){
+      fetch(CONFIG.formUrl, {method:"POST", headers:{"Content-Type":"application/json","Accept":"application/json"},
+        body: JSON.stringify({name:v("f-name"), contact:v("f-contact"), topic:v("f-topic"), ref:v("f-ref"), message:v("f-q")})})
+      .then(function(r){ if (r.ok){ say("Đã gửi! Mình sẽ phản hồi trong " + CONFIG.replyTime + "."); document.getElementById("qform").reset(); } else { say("Gửi chưa được, bạn thử lại hoặc gửi trực tiếp qua email " + CONFIG.email, true); } })
+      .catch(function(){ say("Gửi chưa được, bạn thử lại hoặc gửi trực tiếp qua email " + CONFIG.email, true); });
+    } else {
+      window.location.href = "mailto:" + CONFIG.email + "?subject=" + encodeURIComponent("Câu hỏi tư vấn: " + v("f-topic")) + "&body=" + encodeURIComponent(body);
+      say("Ứng dụng email của bạn sẽ mở ra, bạn bấm Gửi để hoàn tất. Nếu không mở được, hãy gửi nội dung tới " + CONFIG.email + ".");
+    }
+  });
+})();
 </script>
 </body>
 </html>
